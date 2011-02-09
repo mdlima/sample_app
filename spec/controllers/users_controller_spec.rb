@@ -17,13 +17,12 @@ describe UsersController do
 
 			before(:each) do
 				@user = test_sign_in(Factory(:user))
-				second = Factory(:user, :email => "another@example.com")
-				third	 = Factory(:user, :email => "another@example.net")
+				second = Factory(:user, :name => "Name example com", :email => "another@example.com")
+				third	 = Factory(:user, :name => "Name example net", :email => "another@example.net")
 
-					@users = [@user, second, third]
-					30.times do
-						@users << Factory(:user, :email => Factory.next(:email))
-					end
+				@users = [@user, second, third]
+				30.times do
+					@users << Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
 				end
 			end
 
