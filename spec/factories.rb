@@ -11,5 +11,10 @@ Factory.sequence :email do |n|
 end
 
 Factory.sequence :name do |n|
-	"person-#{n}"
+	"Person #{n} Name"
+end
+
+Factory.define :micropost do |micropost|
+  micropost.content "Foo bar"
+  micropost.association :user
 end
