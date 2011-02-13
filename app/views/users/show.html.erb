@@ -15,8 +15,7 @@
 		<td class="sidebar round">
 			<strong>Name</strong> <%= @user.name %><br />
 			<strong>URL</strong> <%= link_to user_path(@user), @user %><br />
-			<!-- <strong>Microposts</strong> <%= @user.microposts.count %> -->
-			<strong><%= pluralize(@user.microposts.count, "Micropost") %></strong>
+			<strong>Microposts</strong> <%= @user.microposts.count %>
 		</td>
 	</tr>
 </table>
