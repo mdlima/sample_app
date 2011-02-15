@@ -95,6 +95,22 @@ describe MicropostsController do
       end
     end
     
+    describe "for an admin user" do
+
+      before(:each) do
+        @user = Factory(:user)
+        wrong_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email), :admin => true)
+        test_sign_in(wrong_user)
+        @micropost = Factory(:micropost, :user => @user)
+      end
+
+      it "should destroy the micropost" do
+        lambda do 
+          delete :destroy, :id => @micropost
+        end.should change(Micropost, :count).by(-1)
+      end
+    end
+    
   end
 
 end

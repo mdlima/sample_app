@@ -6,7 +6,7 @@
     </span>
   </td>
 	<% user = micropost.user rescue User.find(micropost.user_id) %>
-	<% if current_user?(user) %>
+	<% if current_user?(user) || user.admin? %>
   <td>
     <%= link_to "delete", micropost, :method => :delete,
                                      :confirm => "You sure?",
