@@ -26,6 +26,15 @@ section h1 {
   font-size: 200%;
 }
 
+.right {
+float: right;
+}
+
+.left {
+float: left;
+}
+
+
 /* Links */
 
 a {
@@ -41,6 +50,7 @@ a:hover {
 a:visited {
   color: #069;
 }
+
 
 /* Navigation */
 
@@ -78,6 +88,7 @@ nav ul li a:hover {
   text-decoration: underline;
 }
 
+
 /* Sign up button */
 
 a.signup_button {
@@ -92,6 +103,7 @@ a.signup_button {
   font-weight: bold;
   padding: 20px;
 }
+
 
 /* Round corners */
 
@@ -112,6 +124,7 @@ footer {
 footer nav {
   float: none;
 }
+
 
 /* User show page */
 
@@ -143,6 +156,7 @@ div.field, div.actions {
 
 
 /* Error Styles */
+
 .field_with_errors {
   margin-top: 10px;
   padding: 2px;
@@ -184,7 +198,9 @@ div.field, div.actions {
   list-style: square;
 }
 
+
 /* Users Index */
+
 ul.users {
   margin-top: 1em;
 }
@@ -247,4 +263,94 @@ form.new_micropost {
 form.new_micropost textarea {
   height: 4em;
   margin-bottom: 0;
+}
+
+
+/* Authentications */
+
+form.login {
+background: transparent url(/images/login/login.png) no-repeat 0 0;
+/* width: 700px; */
+height: 250px;
+padding-left: 41px;
+padding-top: 32px;
+}
+
+a.twitterConnect_login {
+background: transparent url(/images/login/twittersignin.png) no-repeat 0 0;
+height: 21px;
+width: 151px;
+text-indent: -9999px;
+display: block;
+margin-bottom: 17px;
+margin-top: 8px;
+}
+
+a.facebookConnect_login {
+background: transparent url(/images/login/facebookconnect.png) no-repeat;
+height: 21px;
+width: 169px;
+text-indent: -9999px;
+display: block;
+margin-bottom: 17px;
+margin-top: 8px;
+}
+
+.authentications {
+  margin-bottom: 30px;
+}
+
+.authentication {
+  width: 130px;
+  float: left;
+  background-color: #EEE;
+  border: solid 1px #999;
+  padding: 5px 10px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  position: relative;
+  margin-right: 10px;
+}
+
+.authentication .remove {
+  text-decoration: none;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  color: #333;
+  padding: 2px 4px;
+  font-size: 10px;
+}
+
+.authentication .remove:hover {
+  color: #CCC;
+  background-color: #777;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+
+.authentication img {
+  float: left;
+  margin-right: 10px;
+}
+
+.authentication .provider {
+  font-weight: bold;
+}
+
+.authentication .uid {
+  color: #666;
+  font-size: 11px;
+}
+
+.auth_provider img {
+  display: block;
+}
+
+.auth_provider {
+  float: left;
+  text-decoration: none;
+  margin-right: 20px;
+  text-align: center;
+  margin-bottom: 10px;
 }

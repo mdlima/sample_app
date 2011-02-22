@@ -18,3 +18,9 @@ Factory.define :micropost do |micropost|
   micropost.content "Foo bar"
   micropost.association :user
 end
+
+Factory.define :authentication do |authentication|
+  authentication.provider "twitter"
+  authentication.uid "1234"
+  authentication.association :user
+end

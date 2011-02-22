@@ -204,7 +204,7 @@ describe User do
     
   end
 
-  describe "followships" do
+      describe "followships" do
 
     before(:each) do
       @user = User.create!(@attr)
@@ -261,4 +261,25 @@ describe User do
     end
   end
 
+  describe "authentications" do
+
+    before(:each) do
+      @user = User.create!(@attr)
+      @auth = Factory(:authentication, :user => @user, :provider => "twitter", :uid => "1111")
+    end
+    
+    it "should have an authentications attribute" do
+      @user.should respond_to(:authentications)
+    end
+    
+    it "should have the right authentication" do
+      @user.authentications.should include(@auth)
+    end
+    
+    it "should destroy associated authentications" do
+      @user.destroy
+      Authentication.find_by_id(@auth.id).should be_nil
+    end
+
+  end
 end
