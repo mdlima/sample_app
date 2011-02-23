@@ -21,6 +21,8 @@ SampleApp::Application.routes.draw do
   match '/help',    :to => 'pages#help'
   
   match '/auth/:provider/callback' => 'authentications#create'
+  
+  match '/facebook' => 'pages#home'
 
   root :to => 'pages#home'
 
