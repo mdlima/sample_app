@@ -11,9 +11,14 @@ class AuthenticationsController < ApplicationController
     omniauth = request.env["omniauth.auth"]
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
     if authentication
-      flash[:notice] = "Signed in successfully."
-      sign_in( authentication.user )
-      redirect_back_or authentication.user
+      if (current_user && current_user != authentication.user)
+        flash[:notice] = "This #{omniauth['provider']} user is already connected to another account."
+        redirect_to authentications_url
+      else
+        flash[:notice] = "Signed in successfully."
+        sign_in( authentication.user )
+        redirect_back_or authentication.user
+      end
     elsif current_user
       current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'])
       flash[:notice] = "Authentication successful."
