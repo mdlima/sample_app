@@ -1,30 +1,52 @@
 require 'spec_helper'
 
 describe AuthenticationsController do
-#  fixtures :all
   render_views
 
-  it "index action should render index template" do
-    get :index
-    response.should render_template(:index)
-  end
+	
+	describe "GET 'index'" do
 
-  it "create action should render new template when model is invalid" do
-    Authentication.any_instance.stubs(:valid?).returns(false)
-    post :create
-    response.should render_template(:new)
-  end
+		describe "for non-signed-in users" do
+			it "should deny access" do
+				get :index
+				response.should redirect_to(signin_path)
+				flash[:notice].should =~ /sign in/i
+			end
+		end
 
-  it "create action should redirect when model is valid" do
-    Authentication.any_instance.stubs(:valid?).returns(true)
-    post :create
-    response.should redirect_to(authentications_url)
-  end
+		describe "for signed-in users" do
 
-  it "destroy action should destroy model and redirect to index action" do
-    authentication = Authentication.first
-    delete :destroy, :id => authentication
-    response.should redirect_to(authentications_url)
-    Authentication.exists?(authentication.id).should be_false
+			before(:each) do
+        @user = test_sign_in(Factory(:user))
+			end
+
+			it "should be successful" do
+				get :index
+				response.should be_success
+			end
+
+			it "should have the right title" do
+				get :index
+				response.should have_selector("title", :content => "Connections")
+			end
+
+=begin
+  TODO Add validations for loging in, creating and destroying authentications
+=end
+      # it "should have an element for each user" do
+      #   get :index
+      #   @users[0..2].each do |user|
+      #     response.should have_selector("li", :content => user.name)
+      #   end
+      # end
+
+		end
+	end
+
+	describe "GET 'create'" do
   end
+  
+  describe "GET 'destroy'" do
+	end
+	  
 end

@@ -1,4 +1,6 @@
 class AuthenticationsController < ApplicationController
+  before_filter :authenticate, :except => [:create]
+  
   def index
     @authentications = current_user.authentications if current_user
     @title = "Connections"
@@ -33,11 +35,12 @@ class AuthenticationsController < ApplicationController
   end
 
   def destroy
-    @title = "Sign Out"
+    @title = "Remove Connections"
     @authentication = current_user.authentications.find(params[:id])
     @authentication.destroy
     flash[:notice] = "Successfully destroyed authentication."
     redirect_to authentications_url
   end
+  
 end
 
