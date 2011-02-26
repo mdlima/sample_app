@@ -14,7 +14,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessor :password
+  attr_accessor :password, :remember_me
   attr_accessible :name, :email, :password, :password_confirmation
   
   has_many :authentications, :dependent => :destroy

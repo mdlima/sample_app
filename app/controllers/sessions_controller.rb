@@ -13,7 +13,8 @@ class SessionsController < ApplicationController
       @title = "Sign in"
       render 'new'
     else
-      sign_in( user, params[:session][:remember_me] == "1" )
+      user.remember_me = (params[:session][:remember_me] == "1")
+      sign_in( user )
       redirect_back_or user
     end
   end

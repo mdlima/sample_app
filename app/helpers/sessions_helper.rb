@@ -1,7 +1,7 @@
 module SessionsHelper
 
-  def sign_in(user, remember_user)
-    if remember_user
+  def sign_in(user)
+    if user.remember_me
       cookies.permanent.signed[:remember_token] = [user.id, user.salt]
     else
       session[:remember_token] = [user.id, user.salt]
