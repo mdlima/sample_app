@@ -22,7 +22,7 @@ SampleApp::Application.routes.draw do
   
   match '/auth/:provider/callback' => 'authentications#create'
   
-  match '/facebook' => 'pages#home'
+  # match '/facebook' => 'pages#home'
 
   root :to => 'pages#home'
 

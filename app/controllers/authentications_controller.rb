@@ -1,4 +1,5 @@
 class AuthenticationsController < ApplicationController
+  # skip_before_filter :verify_authenticity_token
   before_filter :authenticate, :except => [:create]
   
   def index
@@ -12,7 +13,7 @@ class AuthenticationsController < ApplicationController
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
     if authentication
       if (current_user && current_user != authentication.user)
-        flash[:notice] = "This #{omniauth['provider']} user is already connected to another account."
+        flash[:notice] = "This #{omniauth['provider']} account is already connected to another user."
         redirect_to authentications_url
       else
         flash[:notice] = "Signed in successfully."
