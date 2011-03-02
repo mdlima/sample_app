@@ -1,0 +1,12 @@
+development:
+  app_id: b266f1ce27909672156de237b223b006
+  secret_key: 3ebeca1d2cd5cb5fca8523d6f703ab93
+  callback_url: http://localhost:3000/
+test:
+  app_id: b266f1ce27909672156de237b223b006
+  secret_key: 3ebeca1d2cd5cb5fca8523d6f703ab93
+  callback_url: http://localhost:3000/
+production:
+  app_id: b266f1ce27909672156de237b223b006
+  secret_key: 3ebeca1d2cd5cb5fca8523d6f703ab93
+  callback_url: http://localhost:3000/
