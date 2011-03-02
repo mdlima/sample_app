@@ -1,0 +1,36 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+ xml:fb="http://www.facebook.com/2008/fbml">
+<head>
+ <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+ <title>Udooz Sample</title>
+ <script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
+</head>
+<body>
+
+<p style="color: green"><%= flash[:notice] %></p>
+<div id="fb-root"></div>
+
+<script type="text/javascript">
+ FB.init({
+ appId : '<%= Facebook::APP_ID %>',
+ status : true, // check login status
+ cookie : true, // enable cookies to allow the server to access the session
+ xfbm : true // parse XFBML
+ });
+
+ FB.login(function(response) {
+ if (response.session) {
+ location.href = '/'
+ } else {
+ alert('// user cancelled login')
+ }
+});
+</script>
+<h1>udooz</h1>
+</body>
+</html>
+
+<!--
+	TODO Page is rendering when user is not signed id or authorized.
+-->
