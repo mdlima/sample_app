@@ -16,7 +16,7 @@ class Authentication < ActiveRecord::Base
   
   belongs_to :user
   
-  validates :user_id,   :presence => true
+  # validates :user_id,   :presence => true  # Removed due to batch assignment for nested forms in user creation
   validates :provider,  :presence => true, :uniqueness => {:scope => :user_id}
   validates :uid,       :presence => true, :uniqueness => {:scope => :provider}
   

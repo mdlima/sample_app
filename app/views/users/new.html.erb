@@ -18,6 +18,13 @@
 		<%= f.label :password_confirmation, "Confirmation" %><br />
 		<%= f.password_field :password_confirmation %>
 	</div>
+
+	<%= @user.authentications %>
+	<%= f.fields_for :authentications do |auth_form| %>
+	  <%= auth_form.hidden_field :provider %>
+		<%= auth_form.hidden_field :uid %>
+	<% end %>
+
 	<div class="actions">
 		<%= f.submit "Sign up" %>
 	</div>
