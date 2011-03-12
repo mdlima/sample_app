@@ -30,9 +30,6 @@ describe AuthenticationsController do
 				response.should have_selector("title", :content => "Connections")
 			end
 
-=begin
-  TODO Add validations for loging in, creating and destroying authentications
-=end
       # it "should have an element for each user" do
       #   get :index
       #   @users[0..2].each do |user|
@@ -49,4 +46,19 @@ describe AuthenticationsController do
   describe "GET 'destroy'" do
 	end
 	  
+
+        it "should login with the correct credential"
+
+        it "should not login with the incorrect credential"
+
+        it "should create a new authentication"
+
+        it "should remove an existing authentication"
+
+        it "should create a second authentication for the existing user"
+
+        it "should log in the correct user"
+
+        it "should login automatically a user with a Facebook signed_request"
+
 end

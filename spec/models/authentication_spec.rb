@@ -31,10 +31,10 @@ describe Authentication do
 	
 	describe "validations" do
 
-    it "should require a user id" do
-      @authentication.user_id = nil
-      @authentication.should_not be_valid
-    end
+#    it "should require a user id" do
+#      @authentication.user_id = nil
+#      @authentication.should_not be_valid
+#    end
 
     it "should require a valid provider" do
       @authentication.provider = nil
