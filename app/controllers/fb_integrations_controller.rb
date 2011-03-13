@@ -36,8 +36,12 @@ class FbIntegrationsController < ApplicationController
             render "users/new"
           end
         rescue Exception => e
-          flash[:notice] = "User not registered. Sign up now!"
-          redirect_to signup_path
+          redirect_to "/auth/facebook"
+          # flash[:notice] = "User not registered. Sign up now!"
+          # render :login, :layout => false
+          # =begin
+            # TODO Add request permissions for users that haven't authorized yet.
+          # =end
         end
       end
     end

@@ -16,10 +16,10 @@
 class User < ActiveRecord::Base
   attr_accessor :password, :remember_me
   attr_accessible :name, :email, :password, :password_confirmation
-  attr_accessible :authentications_attributes # Needed for nested forms in create
   
   has_many :authentications, :dependent => :destroy
   accepts_nested_attributes_for :authentications, :allow_destroy => true
+  attr_accessible :authentications_attributes # Needed for nested forms in create
   
   has_many :microposts, :dependent => :destroy
   has_many :followships, :foreign_key => "follower_id", :dependent => :destroy
