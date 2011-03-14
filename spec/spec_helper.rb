@@ -48,6 +48,8 @@ RSpec.configure do |config|
     # railties/lib/rails/application/bootstrap.rb
     ActiveSupport::Dependencies.clear
 
+	# Sets Omni-auth to test-mode
+	OmniAuth.config.test_mode = true
     
 end
   

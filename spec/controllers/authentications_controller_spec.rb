@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe AuthenticationsController do
-  render_views
+	render_views
 
 	
 	describe "GET 'index'" do
@@ -17,7 +17,7 @@ describe AuthenticationsController do
 		describe "for signed-in users" do
 
 			before(:each) do
-        @user = test_sign_in(Factory(:user))
+				@user = test_sign_in(Factory(:user))
 			end
 
 			it "should be successful" do
@@ -30,35 +30,54 @@ describe AuthenticationsController do
 				response.should have_selector("title", :content => "Connections")
 			end
 
-      # it "should have an element for each user" do
-      #   get :index
-      #   @users[0..2].each do |user|
-      #     response.should have_selector("li", :content => user.name)
-      #   end
-      # end
+			# it "should have an element for each user" do
+			#		get :index
+			#		@users[0..2].each do |user|
+			#			response.should have_selector("li", :content => user.name)
+			#		end
+			# end
 
 		end
 	end
 
 	describe "GET 'create'" do
-  end
+	
+		describe "for non-signed-in users" do
+
+			it "should login the user for a valid credential of an existing user"
+
+			it "should redirect to create a new user for a valid credential of a non-existing user" do
+				OmniAuth.config.add_mock(:twitter, {:uid => '0'})
+				get :create
+			end
+
+			it "should give an error for an invalid credential" do
+				pending "post to login with an invalid credential"
+				OmniAuth.config.mock_auth[:twitter] = :invalid_credentials
+			end
+
+			it "should login automatically a user with a Facebook signed_request"
+
+		end
   
-  describe "GET 'destroy'" do
+		describe "for signed-in users" do
+
+			it "should create a new authentication for a valid credential"
+
+			it "should not create a duplicate authentication"
+
+			it "should give an error for an invalid credential"
+
+			it "should login automatically a user with a Facebook signed_request"
+
+		end
+
 	end
-	  
+	
+	describe "GET 'destroy'" do
 
-        it "should login with the correct credential"
+		it "should remove an existing authentication"
 
-        it "should not login with the incorrect credential"
-
-        it "should create a new authentication"
-
-        it "should remove an existing authentication"
-
-        it "should create a second authentication for the existing user"
-
-        it "should log in the correct user"
-
-        it "should login automatically a user with a Facebook signed_request"
-
+	end
+		
 end
