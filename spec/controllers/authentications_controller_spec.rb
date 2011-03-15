@@ -43,11 +43,26 @@ describe AuthenticationsController do
 	describe "GET 'create'" do
 	
 		describe "for non-signed-in users" do
+		  
+		  before(:each) do
+        @user = Factory(:user)
+    		@attr = { :provider => "facebook", :uid => "1234" }
 
-			it "should login the user for a valid credential of an existing user"
+    		@authentication = @user.authentications.build(@attr)
+
+      end
+
+			it "should login the user for a valid credential of an existing user" do
+			  OmniAuth.config.add_mock(:facebook, {:uid => '1234'})
+				get :create, :provider => 'facebook'
+				
+				controller.current_user.should == @user
+        controller.should be_signed_in
+        
+		  end
 
 			it "should redirect to create a new user for a valid credential of a non-existing user" do
-				OmniAuth.config.add_mock(:twitter, {:uid => '0'})
+				OmniAuth.config.add_mock(:facebook, {:uid => '1234'})
 				get :create
 			end
 

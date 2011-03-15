@@ -43,13 +43,18 @@ RSpec.configure do |config|
     click_button
   end
   
+  def mock_omniauth(provider, credentials)
+  	# Sets Omni-auth to test-mode
+  	OmniAuth.config.test_mode = true
+  	
+  	OmniAuth.config.mock_auth[provider] = credentials
+  end
+
+  
  ### Part of a Spork hack. See http://bit.ly/arY19y
     # Emulate initializer set_clear_dependencies_hook in 
     # railties/lib/rails/application/bootstrap.rb
     ActiveSupport::Dependencies.clear
-
-	# Sets Omni-auth to test-mode
-	OmniAuth.config.test_mode = true
     
 end
   

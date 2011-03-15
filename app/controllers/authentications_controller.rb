@@ -10,7 +10,7 @@ class AuthenticationsController < ApplicationController
   def create
     @title = "Sign In"
     omniauth = request.env["omniauth.auth"]
-    authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
+    authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid']) if omniauth
     if authentication
       if (current_user && current_user != authentication.user)
         flash[:notice] = "This #{omniauth['provider']} account is already connected to another user."
