@@ -18,7 +18,6 @@ class AuthenticationsController < ApplicationController
       else
         flash[:notice] = "Signed in successfully."
         sign_in( authentication.user )
-        logger.debug "authentication.user: #{authentication.user}"
         redirect_back_or authentication.user
       end
     elsif current_user

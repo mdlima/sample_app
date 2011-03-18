@@ -24,6 +24,9 @@ rdoc
 pkg
 tmp
 oa-live
+db/*.sqlite3*
+log/*.log
+*.log
 
 ## PROJECT::SPECIFIC
 *.gem

@@ -44,20 +44,20 @@ describe AuthenticationsController do
 	
 		describe "for non-signed-in users" do
 		  
-		  before(:each) do
-        @authentication = Factory(:authentication)
-        @user = @authentication.user
-      end
+			before(:each) do
+				@authentication = Factory(:authentication)
+				@user = @authentication.user
+			end
 
 			it "should login the user for a valid credential of an existing user" do
-        @request.env['omniauth.auth'] = { "provider" => "facebook", "uid" => "1234" }
+				@request.env['omniauth.auth'] = { "provider" => "facebook", "uid" => "1234" }
 				get :create #, :provider => 'facebook'
 				controller.current_user.should == @user
-        controller.should be_signed_in
-		  end
+				controller.should be_signed_in
+			end
 
 			it "should redirect to create a new user for a valid credential of a non-existing user" do
-        @request.env['omniauth.auth'] = { "provider" => "facebook", "uid" => "1111" }
+				@request.env['omniauth.auth'] = { "provider" => "facebook", "uid" => "1111" }
 				get :create
 				controller.should redirect_to (signup_path)
 			end
@@ -73,12 +73,19 @@ describe AuthenticationsController do
   
 		describe "for signed-in users" do
 		  
-		  before(:each) do
-        @authentication = Factory(:authentication)
-        @user = @authentication.user
-        test_sign_in @user
-      end
-			it "should create a new authentication for a valid credential"
+			before(:each) do
+				@user = Factory(:user)
+				@attr = { "provider" => "facebook", "uid" => "1234" }
+				@authentication = @user.authentications.build(@attr)
+				test_sign_in @user
+			end
+
+			it "should create a new authentication for a valid credential" do
+				@request.env['omniauth.auth'] = @attr
+                                get :create #, :provider => 'facebook'
+                                controller.current_user.should == @user
+				controller.current_user.authentications.find_by_provider(@attr['provider']).should == @authentication
+			end
 
 			it "should not create a duplicate authentication"
 
