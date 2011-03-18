@@ -45,38 +45,39 @@ describe AuthenticationsController do
 		describe "for non-signed-in users" do
 		  
 		  before(:each) do
-        @user = Factory(:user)
-    		@attr = { :provider => "facebook", :uid => "1234" }
-
-    		@authentication = @user.authentications.build(@attr)
-
+        @authentication = Factory(:authentication)
+        @user = @authentication.user
       end
 
 			it "should login the user for a valid credential of an existing user" do
-			  OmniAuth.config.add_mock(:facebook, {:uid => '1234'})
-				get :create, :provider => 'facebook'
-				
+        @request.env['omniauth.auth'] = { "provider" => "facebook", "uid" => "1234" }
+				get :create #, :provider => 'facebook'
 				controller.current_user.should == @user
         controller.should be_signed_in
-        
 		  end
 
 			it "should redirect to create a new user for a valid credential of a non-existing user" do
-				OmniAuth.config.add_mock(:facebook, {:uid => '1234'})
+        @request.env['omniauth.auth'] = { "provider" => "facebook", "uid" => "1111" }
 				get :create
+				controller.should redirect_to (signup_path)
 			end
 
-			it "should give an error for an invalid credential" do
-				pending "post to login with an invalid credential"
-				OmniAuth.config.mock_auth[:twitter] = :invalid_credentials
-			end
+      # it "should give an error for an invalid credential" do
+      #   pending "post to login with an invalid credential"
+      #   OmniAuth.config.mock_auth[:twitter] = :invalid_credentials
+      # end
 
 			it "should login automatically a user with a Facebook signed_request"
 
 		end
   
 		describe "for signed-in users" do
-
+		  
+		  before(:each) do
+        @authentication = Factory(:authentication)
+        @user = @authentication.user
+        test_sign_in @user
+      end
 			it "should create a new authentication for a valid credential"
 
 			it "should not create a duplicate authentication"
