@@ -1,6 +1,7 @@
 class AuthenticationsController < ApplicationController
   # skip_before_filter :verify_authenticity_token
   before_filter :authenticate, :except => [:create]
+  before_filter :authorized_user, :only => :destroy
   
   def index
     @authentications = current_user.authentications if current_user
@@ -21,9 +22,14 @@ class AuthenticationsController < ApplicationController
         redirect_back_or authentication.user
       end
     elsif current_user
-      current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'])
-      flash[:notice] = "Authentication successful."
-      redirect_to authentications_url
+      authentication = current_user.authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
+		if authentication.valid?
+			authentication.save!
+	      flash[:notice] = "Authentication successful."
+		else
+			flash[:notice] = "Invalid authentication."
+		end
+		redirect_to authentications_url
     else
       flash[:notice] = "User not found. Sign up now!"
       redirect_to signup_path
@@ -42,11 +48,16 @@ class AuthenticationsController < ApplicationController
 
   def destroy
     @title = "Remove Connections"
-    @authentication = current_user.authentications.find(params[:id])
     @authentication.destroy
     flash[:notice] = "Successfully destroyed authentication."
     redirect_to authentications_url
   end
 
+  private
+
+    def authorized_user
+      @authentication = Authentication.find(params[:id])
+      redirect_to root_path unless current_user?(@authentication.user) || current_user.admin?
+    end
 end
 

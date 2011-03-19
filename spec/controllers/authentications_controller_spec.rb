@@ -43,7 +43,7 @@ describe AuthenticationsController do
 	describe "GET 'create'" do
 	
 		describe "for non-signed-in users" do
-		  
+			
 			before(:each) do
 				@authentication = Factory(:authentication)
 				@user = @authentication.user
@@ -62,34 +62,43 @@ describe AuthenticationsController do
 				controller.should redirect_to (signup_path)
 			end
 
-      # it "should give an error for an invalid credential" do
-      #   pending "post to login with an invalid credential"
-      #   OmniAuth.config.mock_auth[:twitter] = :invalid_credentials
-      # end
+			it "should redirect to signup for an invalid credential" do
+				@request.env['omniauth.auth'] = {}
+				get :create
+				controller.should redirect_to (signup_path)				
+			end
 
 			it "should login automatically a user with a Facebook signed_request"
 
 		end
-  
+	
 		describe "for signed-in users" do
-		  
+			
 			before(:each) do
 				@user = Factory(:user)
 				@attr = { "provider" => "facebook", "uid" => "1234" }
-				@authentication = @user.authentications.build(@attr)
 				test_sign_in @user
 			end
 
 			it "should create a new authentication for a valid credential" do
-				@request.env['omniauth.auth'] = @attr
-                                get :create #, :provider => 'facebook'
-                                controller.current_user.should == @user
-				controller.current_user.authentications.find_by_provider(@attr['provider']).should == @authentication
+				lambda do
+					@request.env['omniauth.auth'] = @attr
+					get :create #, :provider => 'facebook'
+				end.should change(Authentication, :count).by(1)
 			end
 
-			it "should not create a duplicate authentication"
+			it "should give an error message" do
+				@request.env['omniauth.auth'] = {}
+				get :create
+				flash[:notice].should =~ /invalid/i
+			end
 
-			it "should give an error for an invalid credential"
+			it "should not create a duplicate authentication" do
+				lambda do
+					@request.env['omniauth.auth'] = @attr
+					get :create #, :provider => 'facebook'
+				end.should change(Authentication, :count).by(1)
+			end
 
 			it "should login automatically a user with a Facebook signed_request"
 
@@ -99,7 +108,52 @@ describe AuthenticationsController do
 	
 	describe "GET 'destroy'" do
 
-		it "should remove an existing authentication"
+		describe "for an unauthorized user" do
+
+			before(:each) do
+				@user = Factory(:user)
+				@authentication = Factory(:authentication, :user => @user)
+				wrong_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
+				test_sign_in(wrong_user)
+			end
+
+			it "should deny access" do
+			  delete :destroy, :id => @authentication
+			  response.should redirect_to(root_path)
+			end
+		end
+
+
+		describe "for an authorized user" do
+
+			before(:each) do
+				@authentication = Factory(:authentication)
+				@user = @authentication.user
+				test_sign_in @user
+			end
+
+			it "should remove the authentication" do
+				lambda do			
+					get :destroy, :id => @authentication
+				end.should change(Authentication, :count).by(-1)	
+			end
+		end
+
+		describe "for an admin user" do
+
+			before(:each) do
+				@authentication = Factory(:authentication)
+				@user = @authentication.user
+				wrong_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email), :admin => true)
+				test_sign_in(wrong_user)
+			end
+
+			it "should remove the authentication" do
+				lambda do			
+					get :destroy, :id => @authentication
+				end.should change(Authentication, :count).by(-1)	
+			end
+		end
 
 	end
 		
