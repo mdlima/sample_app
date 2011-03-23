@@ -3,7 +3,6 @@ require 'spec_helper'
 describe AuthenticationsController do
 	render_views
 
-	
 	describe "GET 'index'" do
 
 		describe "for non-signed-in users" do
@@ -38,6 +37,7 @@ describe AuthenticationsController do
 			# end
 
 		end
+
 	end
 
 	describe "GET 'create'" do
@@ -122,7 +122,6 @@ describe AuthenticationsController do
 			  response.should redirect_to(root_path)
 			end
 		end
-
 
 		describe "for an authorized user" do
 
