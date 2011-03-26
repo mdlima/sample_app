@@ -16,7 +16,10 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: mysql2
+  database: boscolotshirt2
+  username: boscolotshirt2
+  password: sampleapp
+  host: 187.45.196.241
   pool: 5
   timeout: 5000
