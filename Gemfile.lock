@@ -61,7 +61,7 @@ GEM
     mime-types (1.16)
     multi_json (0.0.5)
     multipart-post (1.1.0)
-    mysql (2.8.1)
+    mysql2 (0.2.6)
     net-ldap (0.1.1)
     nifty-generators (0.4.5)
     nokogiri (1.4.4)
@@ -163,7 +163,7 @@ DEPENDENCIES
   faker (= 0.3.1)
   gravatar_image_tag (= 1.0.0.pre2)
   koala (~> 1.0.0.beta)
-  mysql
+  mysql2
   nifty-generators
   omniauth
   rails (= 3.0.3)
