@@ -11,6 +11,7 @@ group :development do
 	gem 'annotate-models', '1.0.4'
 	gem 'faker', '0.3.1'
 	gem "nifty-generators"
+	gem "capistrano"
 end
 
 group :test do
