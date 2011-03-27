@@ -16,11 +16,14 @@ ActiveRecord::Schema.define(:version => 20110218135916) do
     t.integer  "user_id"
     t.string   "provider"
     t.string   "uid"
+    t.string   "token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "authentications", ["provider", "uid"], :name => "index_authentications_on_provider_and_uid", :unique => true
   add_index "authentications", ["user_id", "provider"], :name => "index_authentications_on_user_id_and_provider", :unique => true
+  add_index "authentications", ["user_id"], :name => "index_authentications_on_user_id"
 
   create_table "followships", :force => true do |t|
     t.integer  "follower_id"

@@ -4,7 +4,7 @@ describe FbIntegrationsController do
 
   describe "GET 'login'" do
     it "should be successful" do
-      get 'login'
+      get :login
       response.should be_success
     end
   end

@@ -1,9 +1,40 @@
-.bundle
+## MAC OS
+.DS_Store
+
+/live
+.rvmrc
+
+dist/*
+
+## TEXTMATE
+*.tmproj
+tmtags
+
+## EMACS
+*~
+\#*
+.\#*
+
+## VIM
+*.swp
+
+## PROJECT::GENERAL
+coverage
+rdoc
+pkg
+tmp
+oa-live
 db/*.sqlite3*
 log/*.log
 *.log
-/tmp/
-doc/
-*.swp
-*~
-.DS_Store
+
+## PROJECT::SPECIFIC
+*.gem
+.bundle
+.project
+.loadpath
+.yardoc
+doc
+
+Gemfile.lock
+

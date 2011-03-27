@@ -19,7 +19,6 @@
 		<%= f.password_field :password_confirmation %>
 	</div>
 
-	<%= @user.authentications %>
 	<%= f.fields_for :authentications do |auth_form| %>
 	  <%= auth_form.hidden_field :provider %>
 		<%= auth_form.hidden_field :uid %>
